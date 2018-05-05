@@ -28,50 +28,50 @@ import javax.swing.UIManager;
 
 public class JMFMediaPlayer extends JFrame implements ActionListener, ControllerListener, ItemListener
 {
-    // JMFµÄ²¥·ÅÆ÷
+    // JMFçš„æ’­æ”¾å™¨
     Player player;
-    // ²¥·ÅÆ÷µÄÊÓÆµ×é¼şºÍ¿ØÖÆ×é¼ş
+    // æ’­æ”¾å™¨çš„è§†é¢‘ç»„ä»¶å’Œæ§åˆ¶ç»„ä»¶
     Component vedioComponent;
     Component controlComponent;
-    // ±êÊ¾ÊÇ·ñÊÇµÚÒ»´Î´ò¿ª²¥·ÅÆ÷
+    // æ ‡ç¤ºæ˜¯å¦æ˜¯ç¬¬ä¸€æ¬¡æ‰“å¼€æ’­æ”¾å™¨
     boolean first = true;
-    // ±êÊ¾ÊÇ·ñĞèÒªÑ­»·
+    // æ ‡ç¤ºæ˜¯å¦éœ€è¦å¾ªç¯
     boolean loop = false;
-    // ÎÄ¼şµ±Ç°Ä¿Â¼
+    // æ–‡ä»¶å½“å‰ç›®å½•
     String currentDirectory;
-    // ¹¹Ôì·½·¨
+    // æ„é€ æ–¹æ³•
     public JMFMediaPlayer(String title)
     {
         super(title);
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                // ÓÃ»§µã»÷´°¿ÚÏµÍ³²Ëµ¥µÄ¹Ø±Õ°´Å¥
-                // µ÷ÓÃdisposeÒÔÖ´ĞĞwindowClosed
+                // ç”¨æˆ·ç‚¹å‡»çª—å£ç³»ç»Ÿèœå•çš„å…³é—­æŒ‰é’®
+                // è°ƒç”¨disposeä»¥æ‰§è¡ŒwindowClosed
                 dispose();
             }
             public void windowClosed(WindowEvent e) {
                 if (player != null) {
-                    // ¹Ø±ÕJMF²¥·ÅÆ÷¶ÔÏó
+                    // å…³é—­JMFæ’­æ”¾å™¨å¯¹è±¡
                     player.close();
                 }
                 System.exit(0);
             }
         });
 
-        // ´´½¨²¥·ÅÆ÷µÄ²Ëµ¥
-        JMenu fileMenu = new JMenu("ÎÄ¼ş");
-        JMenuItem openMemuItem = new JMenuItem("´ò¿ª");
+        // åˆ›å»ºæ’­æ”¾å™¨çš„èœå•
+        JMenu fileMenu = new JMenu("æ–‡ä»¶");
+        JMenuItem openMemuItem = new JMenuItem("æ‰“å¼€");
         openMemuItem.addActionListener(this);
         fileMenu.add(openMemuItem);
-        // Ìí¼ÓÒ»¸ö·Ö¸îÌõ
+        // æ·»åŠ ä¸€ä¸ªåˆ†å‰²æ¡
         fileMenu.addSeparator();
-        // ´´½¨Ò»¸ö¸´Ñ¡¿ò²Ëµ¥Ïî
-        JCheckBoxMenuItem loopMenuItem = new JCheckBoxMenuItem("Ñ­»·", false);
+        // åˆ›å»ºä¸€ä¸ªå¤é€‰æ¡†èœå•é¡¹
+        JCheckBoxMenuItem loopMenuItem = new JCheckBoxMenuItem("å¾ªç¯", false);
         loopMenuItem.addItemListener(this);
         fileMenu.add(loopMenuItem);
         fileMenu.addSeparator();
-        JMenuItem exitMemuItem = new JMenuItem("ÍË³ö");
+        JMenuItem exitMemuItem = new JMenuItem("é€€å‡º");
         exitMemuItem.addActionListener(this);
         fileMenu.add(exitMemuItem);
 
@@ -82,7 +82,7 @@ public class JMFMediaPlayer extends JFrame implements ActionListener, Controller
 
         try
         {
-            // ÉèÖÃ½çÃæµÄÍâ¹Û£¬ÎªÏµÍ³Íâ¹Û
+            // è®¾ç½®ç•Œé¢çš„å¤–è§‚ï¼Œä¸ºç³»ç»Ÿå¤–è§‚
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         }
@@ -93,20 +93,20 @@ public class JMFMediaPlayer extends JFrame implements ActionListener, Controller
         this.setVisible(true);
     }
     /**
-    * ÊµÏÖÁËActionListener½Ó¿Ú£¬´¦Àí×é¼şµÄ»î¶¯ÊÂ¼ş
+    * å®ç°äº†ActionListeneræ¥å£ï¼Œå¤„ç†ç»„ä»¶çš„æ´»åŠ¨äº‹ä»¶
     */
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getActionCommand().equals("ÍË³ö"))
+        if (e.getActionCommand().equals("é€€å‡º"))
         {
-            // µ÷ÓÃdisposeÒÔ±ãÖ´ĞĞwindowClosed
+            // è°ƒç”¨disposeä»¥ä¾¿æ‰§è¡ŒwindowClosed
             dispose();
             return;
         }
-        FileDialog fileDialog = new FileDialog(this, "´ò¿ªÃ½ÌåÎÄ¼ş", FileDialog.LOAD);
+        FileDialog fileDialog = new FileDialog(this, "æ‰“å¼€åª’ä½“æ–‡ä»¶", FileDialog.LOAD);
         fileDialog.setDirectory(currentDirectory);
         fileDialog.setVisible(true);
-        // Èç¹ûÓÃ»§·ÅÆúÑ¡ÔñÎÄ¼ş£¬Ôò·µ»Ø
+        // å¦‚æœç”¨æˆ·æ”¾å¼ƒé€‰æ‹©æ–‡ä»¶ï¼Œåˆ™è¿”å›
         if (fileDialog.getFile() == null)
         {
             return;
@@ -114,12 +114,12 @@ public class JMFMediaPlayer extends JFrame implements ActionListener, Controller
         currentDirectory = fileDialog.getDirectory();
         if (player != null)
         {
-            // ¹Ø±ÕÒÑ¾­´æÔÚJMF²¥·ÅÆ÷¶ÔÏó
+            // å…³é—­å·²ç»å­˜åœ¨JMFæ’­æ”¾å™¨å¯¹è±¡
             player.close();
         }
         try
         {
-            // ´´½¨Ò»¸ö´ò¿ªÑ¡ÔñÎÄ¼şµÄ²¥·ÅÆ÷
+            // åˆ›å»ºä¸€ä¸ªæ‰“å¼€é€‰æ‹©æ–‡ä»¶çš„æ’­æ”¾å™¨
             player = Manager.createPlayer(
 				new MediaLocator("file:"
                     + fileDialog.getDirectory() + fileDialog.getFile()));
@@ -136,25 +136,25 @@ public class JMFMediaPlayer extends JFrame implements ActionListener, Controller
         }
         if (player == null)
         {
-            System.out.println("ÎŞ·¨´´½¨²¥·ÅÆ÷.");
+            System.out.println("æ— æ³•åˆ›å»ºæ’­æ”¾å™¨.");
             return;
         }
         first = false;
         this.setTitle(fileDialog.getFile());
         
-		// ²¥·ÅÆ÷µÄ¿ØÖÆÊÂ¼ş´¦Àí
+		// æ’­æ”¾å™¨çš„æ§åˆ¶äº‹ä»¶å¤„ç†
         player.addControllerListener(this);
-        // Ô¤¶ÁÎÄ¼şÄÚÈİ
+        // é¢„è¯»æ–‡ä»¶å†…å®¹
         player.prefetch();
     }
     /**
-    * ÊµÏÖControllerListener½Ó¿ÚµÄ·½·¨£¬´¦Àí²¥·ÅÆ÷µÄ¿ØÖÆÊÂ¼ş
+    * å®ç°ControllerListeneræ¥å£çš„æ–¹æ³•ï¼Œå¤„ç†æ’­æ”¾å™¨çš„æ§åˆ¶äº‹ä»¶
     */
     public void controllerUpdate(ControllerEvent e)
     {
-        // µ÷ÓÃplayer.close()Ê±ControllerClosedEventÊÂ¼ş³öÏÖ¡£
-        // Èç¹û´æÔÚÊÓ¾õ²¿¼ş£¬Ôò¸Ã²¿¼şÓ¦¸Ã²ğ³ı£¨ÎªÒ»ÖÂÆğ¼û£¬
-        // ÎÒÃÇ¶Ô¿ØÖÆÃæ°å²¿¼şÒ²Ö´ĞĞÍ¬ÑùµÄ²Ù×÷£©
+        // è°ƒç”¨player.close()æ—¶ControllerClosedEventäº‹ä»¶å‡ºç°ã€‚
+        // å¦‚æœå­˜åœ¨è§†è§‰éƒ¨ä»¶ï¼Œåˆ™è¯¥éƒ¨ä»¶åº”è¯¥æ‹†é™¤ï¼ˆä¸ºä¸€è‡´èµ·è§ï¼Œ
+        // æˆ‘ä»¬å¯¹æ§åˆ¶é¢æ¿éƒ¨ä»¶ä¹Ÿæ‰§è¡ŒåŒæ ·çš„æ“ä½œï¼‰
         if (e instanceof ControllerClosedEvent)
         {
             if (vedioComponent != null)
@@ -169,25 +169,25 @@ public class JMFMediaPlayer extends JFrame implements ActionListener, Controller
             }
             return;
         }
-        // Èç¹ûÊÇÃ½ÌåÎÄ¼şµ½´ïÎ²²¿ÊÂ¼ş
+        // å¦‚æœæ˜¯åª’ä½“æ–‡ä»¶åˆ°è¾¾å°¾éƒ¨äº‹ä»¶
         if (e instanceof EndOfMediaEvent)
         {
             if (loop)
             {
-                // Èç¹ûÔÊĞíÑ­»·£¬ÔòÖØĞÂ¿ªÊ¼²¥·Å
+                // å¦‚æœå…è®¸å¾ªç¯ï¼Œåˆ™é‡æ–°å¼€å§‹æ’­æ”¾
                 player.setMediaTime(new Time(0));
                 player.start();
             }
             return;
         }
-        // Èç¹ûÊÇ²¥·ÅÆ÷Ô¤¶ÁÊÂ¼ş
+        // å¦‚æœæ˜¯æ’­æ”¾å™¨é¢„è¯»äº‹ä»¶
         if (e instanceof PrefetchCompleteEvent)
         {
-            // Æô¶¯²¥·ÅÆ÷
+            // å¯åŠ¨æ’­æ”¾å™¨
             player.start();
             return;
         }
-        // Èç¹ûÊÇÎÄ¼ş´ò¿ªÍêÈ«ÊÂ¼ş£¬ÔòÏÔÊ¾ÊÓÆµ×é¼şºÍ¿ØÖÆÆ÷×é¼ş
+        // å¦‚æœæ˜¯æ–‡ä»¶æ‰“å¼€å®Œå…¨äº‹ä»¶ï¼Œåˆ™æ˜¾ç¤ºè§†é¢‘ç»„ä»¶å’Œæ§åˆ¶å™¨ç»„ä»¶
         if (e instanceof RealizeCompleteEvent)
         {
             vedioComponent = player.getVisualComponent();
@@ -204,13 +204,13 @@ public class JMFMediaPlayer extends JFrame implements ActionListener, Controller
         }
     }
 
-    // ´¦Àí¡°Ñ­»·¡±¸´Ñ¡¿ò²Ëµ¥ÏîµÄµã»÷ÊÂ¼ş
+    // å¤„ç†â€œå¾ªç¯â€å¤é€‰æ¡†èœå•é¡¹çš„ç‚¹å‡»äº‹ä»¶
     public void itemStateChanged(ItemEvent e)
     {
         loop = !loop;
     }
     public static void main(String[] args)
     {
-        new JMFMediaPlayer("JMFÃ½Ìå²¥·ÅÆ÷");
+        new JMFMediaPlayer("JMFåª’ä½“æ’­æ”¾å™¨");
     }
 }

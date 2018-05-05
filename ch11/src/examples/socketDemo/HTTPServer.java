@@ -1,3 +1,5 @@
+package examples.socketDemo;
+
 import java.io. * ;
 import java.net. * ;
 
@@ -9,21 +11,21 @@ public class HTTPServer {
 		try {
 			port = Integer.parseInt(args[0]);
 		} catch(Exception e) {
-			System.out.println("port = 8065 (Ä¬ÈÏ)");
-			port = 8065; //Ä¬ÈÏ¶Ë¿Ú
+			System.out.println("port = 8065 (é»˜è®¤)");
+			port = 8065; //é»˜è®¤ç«¯å£
 		}
 
 		try {
 			serverSocket = new ServerSocket(port);
-			System.out.println("·şÎñÆ÷ÕıÔÚ¼àÌı¶Ë¿Ú£º" + serverSocket.getLocalPort());
+			System.out.println("æœåŠ¡å™¨æ­£åœ¨ç›‘å¬ç«¯å£ï¼š" + serverSocket.getLocalPort());
 
-			while (true) { //·şÎñÆ÷ÔÚÒ»¸öÎŞÏŞÑ­»·ÖĞ²»¶Ï½ÓÊÕÀ´×Ô¿Í»§µÄTCPÁ¬½ÓÇëÇó
+			while (true) { //æœåŠ¡å™¨åœ¨ä¸€ä¸ªæ— é™å¾ªç¯ä¸­ä¸æ–­æ¥æ”¶æ¥è‡ªå®¢æˆ·çš„TCPè¿æ¥è¯·æ±‚
 				try {
-					//µÈ´ı¿Í»§µÄTCPÁ¬½ÓÇëÇó
+					//ç­‰å¾…å®¢æˆ·çš„TCPè¿æ¥è¯·æ±‚
 					final Socket socket = serverSocket.accept();
-					System.out.println("½¨Á¢ÁËÓë¿Í»§µÄÒ»¸öĞÂµÄTCPÁ¬½Ó£¬¸Ã¿Í»§µÄµØÖ·Îª£º" + socket.getInetAddress() + ":" + socket.getPort());
+					System.out.println("å»ºç«‹äº†ä¸å®¢æˆ·çš„ä¸€ä¸ªæ–°çš„TCPè¿æ¥ï¼Œè¯¥å®¢æˆ·çš„åœ°å€ä¸ºï¼š" + socket.getInetAddress() + ":" + socket.getPort());
 
-					service(socket); //ÏìÓ¦¿Í»§ÇëÇó
+					service(socket); //å“åº”å®¢æˆ·è¯·æ±‚
 
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -34,57 +36,57 @@ public class HTTPServer {
 		}
 	}
 
-	/** ÏìÓ¦¿Í»§µÄHTTPÇëÇó */
+	/** å“åº”å®¢æˆ·çš„HTTPè¯·æ±‚ */
 	public static void service(Socket socket) throws Exception {
 
-		/*¶ÁÈ¡HTTPÇëÇóĞÅÏ¢*/
-		InputStream socketIn = socket.getInputStream(); //»ñµÃÊäÈëÁ÷
-		Thread.sleep(500); //µÈ´ıHTTPÇëÇó  
+		/*è¯»å–HTTPè¯·æ±‚ä¿¡æ¯*/
+		InputStream socketIn = socket.getInputStream(); //è·å¾—è¾“å…¥æµ
+		Thread.sleep(500); //ç­‰å¾…HTTPè¯·æ±‚  
 		int size = socketIn.available();
 		byte[] requestBuffer = new byte[size];
 		socketIn.read(requestBuffer);
 		String request = new String(requestBuffer);
 		System.out.println(request); 
 
-		/*½âÎöHTTPÇëÇó*/
-		//»ñµÃHTTPÇëÇóµÄµÚÒ»ĞĞ
+		/*è§£æHTTPè¯·æ±‚*/
+		//è·å¾—HTTPè¯·æ±‚çš„ç¬¬ä¸€è¡Œ
 		String firstLineOfRequest = request.substring(0, request.indexOf("\r\n"));
-		//½âÎöHTTPÇëÇóµÄµÚÒ»ĞĞ 
+		//è§£æHTTPè¯·æ±‚çš„ç¬¬ä¸€è¡Œ 
 		String[] parts = firstLineOfRequest.split(" ");
-		String uri = parts[1]; //»ñµÃHTTPÇëÇóÖĞµÄuri
-		if (uri.equals("/")) uri = "index.htm"; //Ä¬ÈÏÖ÷Ò³
-		uri = "root/" + uri; //Ä¬ÈÏÎÄµµÄ¿Â¼ÏÂµÄÎÄ¼ş
+		String uri = parts[1]; //è·å¾—HTTPè¯·æ±‚ä¸­çš„uri
+		if (uri.equals("/")) uri = "index.htm"; //é»˜è®¤ä¸»é¡µ
+		uri = "root/" + uri; //é»˜è®¤æ–‡æ¡£ç›®å½•ä¸‹çš„æ–‡ä»¶
 
-		/*¾ö¶¨HTTPÏìÓ¦ÕıÎÄµÄÀàĞÍ*/
+		/*å†³å®šHTTPå“åº”æ­£æ–‡çš„ç±»å‹*/
 		String contentType;
 		if (uri.indexOf("html") != -1 || uri.indexOf("htm") != -1) contentType = "text/html";
 		else if (uri.indexOf("jpg") != -1 || uri.indexOf("jpeg") != -1) contentType = "image/jpeg";
 		else if (uri.indexOf("gif") != -1) contentType = "image/gif";
 		else contentType = "application/octet-stream";
 
-		/*´´½¨HTTPÏìÓ¦½á¹û */
-		//HTTPÏìÓ¦µÄµÚÒ»ĞĞ
+		/*åˆ›å»ºHTTPå“åº”ç»“æœ */
+		//HTTPå“åº”çš„ç¬¬ä¸€è¡Œ
 		String responseFirstLine = "HTTP/1.1 200 OK\r\n";
-		//HTTPÏìÓ¦Í·
+		//HTTPå“åº”å¤´
 		String responseHeader = "Content-Type:" + contentType + "\r\n\r\n";
 		
-		//»ñµÃ¶ÁÈ¡ÏìÓ¦ÕıÎÄÊı¾İµÄÊäÈëÁ÷
+		//è·å¾—è¯»å–å“åº”æ­£æ–‡æ•°æ®çš„è¾“å…¥æµ
 		//InputStream in=HTTPServer.class.getResourceAsStream(uri);
 		InputStream in =new FileInputStream(uri);
 
-		/*·¢ËÍHTTPÏìÓ¦½á¹û */
-		OutputStream socketOut = socket.getOutputStream(); //»ñµÃÊä³öÁ÷
-		//·¢ËÍHTTPÏìÓ¦µÄµÚÒ»ĞĞ
+		/*å‘é€HTTPå“åº”ç»“æœ */
+		OutputStream socketOut = socket.getOutputStream(); //è·å¾—è¾“å‡ºæµ
+		//å‘é€HTTPå“åº”çš„ç¬¬ä¸€è¡Œ
 		socketOut.write(responseFirstLine.getBytes());
-		//·¢ËÍHTTPÏìÓ¦µÄÍ·
+		//å‘é€HTTPå“åº”çš„å¤´
 		socketOut.write(responseHeader.getBytes());
-		//·¢ËÍHTTPÏìÓ¦µÄÕıÎÄ
+		//å‘é€HTTPå“åº”çš„æ­£æ–‡
 		int len = 0;
 		byte[] buffer = new byte[128];
 		while ((len = in.read(buffer)) != -1) socketOut.write(buffer, 0, len);
 
-		Thread.sleep(1000); //Ë¯Ãß1Ãë£¬µÈ´ı¿Í»§½ÓÊÕHTTPÏìÓ¦½á¹û        
-		socket.close(); //¹Ø±ÕTCPÁ¬½Ó  
+		Thread.sleep(1000); //ç¡çœ 1ç§’ï¼Œç­‰å¾…å®¢æˆ·æ¥æ”¶HTTPå“åº”ç»“æœ        
+		socket.close(); //å…³é—­TCPè¿æ¥  
 
 	}
 

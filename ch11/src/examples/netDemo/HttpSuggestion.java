@@ -1,3 +1,5 @@
+package examples.netDemo;
+
 import org.apache.http.*;
 import org.apache.http.client.*;
 import org.apache.http.client.fluent.*;
@@ -53,7 +55,7 @@ public class HttpSuggestion extends JFrame {
 	}
 
 	public static void main(String... args) throws Exception {
-		// String word = "ÈË";
+		// String word = "äºº";
 		// fetchSuggestion(word);
 
 		SwingUtilities.invokeLater(() -> {
@@ -77,7 +79,7 @@ public class HttpSuggestion extends JFrame {
 				.returnContent().asString();
 
 		System.out.println(content);
-		// window.baidu.sug({q:"ÈË",p:false,s:["ÈËÌåÒÕÊõ","ÈËÌåÒÕÊõÍ¼Æ¬","ÈËÈËÍø","ÈËÌåÒÕÊõÉãÓ°","ÈËÃñ±Ò¶ÔÃÀÔª»ãÂÊ","ÈËÌå","ÈËÈË´û","ÈËÈËÓ°ÊÓ"]});
+		// window.baidu.sug({q:"äºº",p:false,s:["äººä½“è‰ºæœ¯","äººä½“è‰ºæœ¯å›¾ç‰‡","äººäººç½‘","äººä½“è‰ºæœ¯æ‘„å½±","äººæ°‘å¸å¯¹ç¾å…ƒæ±‡ç‡","äººä½“","äººäººè´·","äººäººå½±è§†"]});
 
 		String[] sug = content.replaceAll(".*,s:\\[([^\\]]*)\\].*", "$1")
 				.replaceAll("\"", "").split(",");

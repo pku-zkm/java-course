@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 
-public class PlayerMusic implements ControllerListener { // ControllerListener // ¿ØÖÆÊÂ¼ş 
+public class PlayerMusic implements ControllerListener { // ControllerListener // æ§åˆ¶äº‹ä»¶ 
     private Player player;
     private boolean first,  loop;
     private String path;
@@ -18,9 +18,9 @@ public class PlayerMusic implements ControllerListener { // ControllerListener /
 			File playFile = new File(mp3List.get(idx));
 			player = Manager.createRealizedPlayer(playFile.toURI().toURL());
         } catch(javax.media.CannotRealizeException ex) {
-            System.out.println("²»ÄÜ´´½¨²¥·ÅÆ÷");
+            System.out.println("ä¸èƒ½åˆ›å»ºæ’­æ”¾å™¨");
         } catch(NoPlayerException ex) {
-            System.out.println("²»ÄÜ²¥·ÅÎÄ¼ş");
+            System.out.println("ä¸èƒ½æ’­æ”¾æ–‡ä»¶");
         } catch(IOException ex) {
         }
         if (player == null) {
